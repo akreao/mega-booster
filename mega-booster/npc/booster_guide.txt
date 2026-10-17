@@ -1,0 +1,95 @@
+//===== rAthena Script =======================================
+//= Mega Booster: Booster Guide (where new characters get the box)
+//===== Description: =========================================
+//= Part of the Ragnarok Offline mod "mega-booster".
+//=
+//=  izlude 127,237     Booster Guide, where new characters arrive
+//=                     and where GN puts Sparky of the Criatura
+//=                     Academy, who greets kRO's booster character
+//=  lasa_fild01 44,301 the same guide for Doram, by their start point
+//=
+//= Plus a login hint that points new characters to the guide.
+//============================================================
+
+//------------------------------------------------------------
+// Booster Guide. On kRO the Booster Box comes bundled in cash
+// packages (client item text) and the event character starts in
+// Izlude, where Sparky of the Criatura Academy greets it (GN). This
+// mod puts the guide on that spot instead [deviation]: one box per
+// account, for a character at Base Lv 10 or below. The setting
+// box_per_character gives one box to every character instead, and
+// premium_start_box gives the Premium Booster Box instead.
+// New characters that could still take a box get a pointer here on
+// their first logins.
+//------------------------------------------------------------
+
+// The box already taken (its item ID), or 0. Per character when
+// box_per_character is on, per account otherwise.
+function	script	F_Booster_BoxTaken	{
+	if (callfunc("F_ModSetting", "mega-booster", "box_per_character", 0))
+		return MEGA_BOOSTER_BOX;
+	return #MEGA_BOOSTER_BOX;
+}
+
+izlude,127,237,4	script	Booster Guide#bst	10243,{
+	.@premium = callfunc("F_ModSetting", "mega-booster", "premium_start_box", 0);
+	.@per_char = callfunc("F_ModSetting", "mega-booster", "box_per_character", 0);
+	.@box = (.@premium ? 103048 : 101538);
+	.@taken = callfunc("F_Booster_BoxTaken");
+	mes "[Booster Guide]";
+	if (.@per_char)
+		mes "The Mega Booster Promotion gives every new character a head start, all the way to Base Lv 250.";
+	else
+		mes "The Mega Booster Promotion gives one character per account a head start, all the way to Base Lv 250.";
+	next;
+	if (.@taken) {
+		mes "[Booster Guide]";
+		.@who$ = (.@per_char ? "This character" : "Your account");
+		mes .@who$ + " has already received its " + getitemname(.@taken) + ".";
+		mes "Use your Booster Call to summon Lime Evenor any time.";
+		close;
+	}
+	if (BaseLevel > 10) {
+		mes "[Booster Guide]";
+		mes "The " + getitemname(.@box) + " can only be opened at Base Lv 10 or below. Please bring a new character.";
+		close;
+	}
+	mes "[Booster Guide]";
+	if (.@per_char)
+		mes "Would you like a " + getitemname(.@box) + " for this character?";
+	else
+		mes "Would you like this character to be your account's booster character? Each account gets ^ff0000one^000000 " + getitemname(.@box) + ".";
+	next;
+	if (select("Yes, this character", "Not now") == 2)
+		close;
+	if (!checkweight(.@box, 1)) {
+		mes "[Booster Guide]";
+		mes "You're carrying too much.";
+		close;
+	}
+	// Both are set, so switching to per-account later still counts
+	// the boxes characters already took.
+	MEGA_BOOSTER_BOX = .@box;
+	#MEGA_BOOSTER_BOX = .@box;
+	getitem .@box, 1;
+	mes "[Booster Guide]";
+	mes "Open the box, then use the Booster Call to summon Lime Evenor. She'll guide you from there.";
+	close;
+}
+
+// Doram start on lasa_fild01 (char_athena.conf start_point_doram
+// 48,297), next to the tutorial's first trigger at 47,297.
+lasa_fild01,44,301,5	duplicate(Booster Guide#bst)	Booster Guide#bst2	10243
+
+// Points brand-new characters (Base 1 / Job 1) at the guide while
+// they can still take a box.
+-	script	#booster_login	-1,{
+OnPCLoginEvent:
+	if (BaseLevel > 1 || JobLevel > 1 || callfunc("F_Booster_BoxTaken"))
+		end;
+	if (Class == Job_Summoner)
+		dispbottom "[Mega Booster] Visit the Booster Guide here on the Lasagna field (44, 301) to get your Booster Box.";
+	else
+		dispbottom "[Mega Booster] Visit the Booster Guide in Izlude (127, 237) to get your Booster Box.";
+	end;
+}

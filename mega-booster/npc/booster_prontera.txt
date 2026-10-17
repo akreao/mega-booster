@@ -1,0 +1,347 @@
+//===== rAthena Script =======================================
+//= Mega Booster: Prontera service NPCs and enchanters
+//===== Description: =========================================
+//= Part of the Ragnarok Offline mod "mega-booster".
+//=
+//= Positions and kRO sprite numbers are from the kRO client's
+//= navigation table (navi_npc_krpri.lub), and hazyforest agrees.
+//= GN (gnjoy notice 278) puts the first three in Prontera's
+//= Adventurer Convenience Center (모험가 편의센터) and says the
+//= Booster Call keeps working after the promotion ends.
+//=
+//=  prt_in 34,95      Mega Booster Job Agent (메가 부스터 전직요원)
+//=  prt_in 37,95      Reset Service (초기화 서비스) [unverified: position, HF only]
+//=  prt_in 40,95      Booster Exchanger (부스터 교환원)
+//=  sp_cor 98,136     Booster Enchanter (Illusion)
+//=  ba_maison 136,103 Booster Enchanter (Automatic)
+//=
+//= Every service is for Booster Call / Premium Booster Call holders.
+//============================================================
+
+// True when the player holds either Booster Call.
+function	script	F_Booster_Holder	{
+	return (countitem(100337) > 0 || countitem(101473) > 0);
+}
+
+// Raises Base and Job Level to at least the given levels, one level
+// at a time (getexp2 ignores rates). Stops early at a level cap.
+function	script	F_Booster_LevelTo	{
+	.@base = getarg(0);
+	.@job = getarg(1);
+	while (BaseLevel < .@base && NextBaseExp > 0) {
+		.@lv = BaseLevel;
+		getexp2 NextBaseExp - BaseExp, 0;
+		if (BaseLevel == .@lv)
+			break;
+	}
+	while (JobLevel < .@job && NextJobExp > 0) {
+		.@lv = JobLevel;
+		getexp2 0, NextJobExp - JobExp;
+		if (JobLevel == .@lv)
+			break;
+	}
+	return;
+}
+
+// Pick-one box: getarg(0) is the box, then item, amount pairs.
+// Used by the item scripts in db/item_db.yml. The boxes are
+// DelayConsume, so the script deletes the box itself, and only once
+// the player has chosen.
+function	script	F_Booster_Pick	{
+	.@box = getarg(0);
+	.@n = (getargcount() - 1) / 2;
+	for (.@i = 0; .@i < .@n; .@i++) {
+		.@item[.@i] = getarg(1 + .@i * 2);
+		.@amt[.@i] = getarg(2 + .@i * 2);
+		.@menu$ += (.@amt[.@i] > 1 ? .@amt[.@i] + " x " : "") + getitemname(.@item[.@i]) + ":";
+	}
+	.@menu$ += "Cancel";
+	mes "[" + getitemname(.@box) + "]";
+	mes "Choose one.";
+	.@s = select(.@menu$) - 1;
+	if (.@s >= .@n)
+		close;
+	if (countitem(.@box) < 1)
+		close;
+	if (!checkweight(.@item[.@s], .@amt[.@s])) {
+		mes "You're carrying too much.";
+		close;
+	}
+	delitem .@box, 1;
+	getitem .@item[.@s], .@amt[.@s];
+	close;
+}
+
+//------------------------------------------------------------
+// Mega Booster Job Agent
+// GN + HF: free rebirth at Lv 99; after the transcended 1st job the
+// agent sets Base 60 / Job 50, after the transcended 2nd job Base 99
+// / Job 70. The job-change requirements (1st job at Job Lv 10, Super
+// Novice also Base 45, 2nd job at Job Lv 50; 3rd and 4th jobs through
+// the normal quests) are HF only. [unverified: requirements]
+//------------------------------------------------------------
+prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
+	mes "[Mega Booster Job Agent]";
+	if (!callfunc("F_Booster_Holder")) {
+		mes "I only help adventurers who carry a Booster Call.";
+		close;
+	}
+	.@eac = eaclass();
+	.@base = .@eac & EAJ_BASEMASK;
+	.@basic = (.@base == EAJ_SWORDMAN || .@base == EAJ_MAGE || .@base == EAJ_ARCHER || .@base == EAJ_ACOLYTE || .@base == EAJ_MERCHANT || .@base == EAJ_THIEF);
+
+	// Novice: first job.
+	if (Class == Job_Novice) {
+		if (JobLevel < 10) {
+			mes "Come back at Job Lv 10 and I'll get you your first job.";
+			close;
+		}
+		setarray .@jobs[0], Job_Swordman, Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief, Job_Taekwon, Job_Gunslinger, Job_Ninja, Job_Super_Novice;
+		.@menu$ = "";
+		for (.@i = 0; .@i < getarraysize(.@jobs); .@i++)
+			.@menu$ += jobname(.@jobs[.@i]) + ":";
+		mes "Which job would you like?";
+		next;
+		.@s = select(.@menu$ + "Cancel") - 1;
+		if (.@s >= getarraysize(.@jobs))
+			close;
+		if (.@jobs[.@s] == Job_Super_Novice && BaseLevel < 45) {
+			mes "[Mega Booster Job Agent]";
+			mes "Super Novice needs Base Lv 45.";
+			close;
+		}
+		callsub L_Change, .@jobs[.@s], 0, 0;
+		end;
+	}
+
+	// High Novice: transcended 1st job, then Base 60 / Job 50.
+	if (Class == Job_Novice_High) {
+		if (JobLevel < 10) {
+			mes "Come back at Job Lv 10.";
+			close;
+		}
+		if (lastJob)
+			.@to = roclass((eaclass(lastJob) & EAJ_BASEMASK) | EAJL_UPPER);
+		else {
+			setarray .@jobs[0], Job_Swordman_High, Job_Mage_High, Job_Archer_High, Job_Acolyte_High, Job_Merchant_High, Job_Thief_High;
+			.@menu$ = "";
+			for (.@i = 0; .@i < getarraysize(.@jobs); .@i++)
+				.@menu$ += jobname(.@jobs[.@i]) + ":";
+			.@s = select(.@menu$ + "Cancel") - 1;
+			if (.@s >= getarraysize(.@jobs))
+				close;
+			.@to = .@jobs[.@s];
+		}
+		mes "You'll become " + callfunc("F_InsertArticle", jobname(.@to)) + ", and I'll raise you to Base Lv 60 / Job Lv 50.";
+		next;
+		if (select("Go ahead", "Not now") == 2)
+			close;
+		callsub L_Change, .@to, 60, 50;
+		end;
+	}
+
+	// 1st job of the six basic classes: 2nd job (transcended: the
+	// matching one, then Base 99 / Job 70).
+	if (.@basic && !(.@eac & EAJL_2) && !(.@eac & EAJL_THIRD)) {
+		if (JobLevel < 50) {
+			mes "Come back at Job Lv 50 for your second job.";
+			close;
+		}
+		if ((.@eac & EAJL_UPPER) && lastJob) {
+			.@to = lastJob + Job_Novice_High;
+			mes "You'll become " + callfunc("F_InsertArticle", jobname(.@to)) + ", and I'll raise you to Base Lv 99 / Job Lv 70.";
+			next;
+			if (select("Go ahead", "Not now") == 2)
+				close;
+			callsub L_Change, .@to, 99, 70;
+			end;
+		}
+		.@c1 = roclass(.@eac | EAJL_2_1);
+		.@c2 = roclass(.@eac | EAJL_2_2);
+		mes "Which second job?";
+		next;
+		.@s = select(jobname(.@c1), jobname(.@c2), "Cancel");
+		if (.@s == 3)
+			close;
+		callsub L_Change, (.@s == 1 ? .@c1 : .@c2), 0, 0;
+		end;
+	}
+
+	// 2nd job of the six basic classes: free rebirth at Lv 99.
+	if (.@basic && (.@eac & EAJL_2) && !(.@eac & EAJL_UPPER) && !(.@eac & EAJL_THIRD)) {
+		if (BaseLevel < 99 || JobLevel < 50) {
+			mes "At Base Lv 99 and Job Lv 50 I can rebirth you for free.";
+			close;
+		}
+		if (checkcart() || checkfalcon() || checkriding() || checkdragon() || checkwug() || checkmadogear() || ismounting()) {
+			mes "Please put away your cart, falcon, warg or mount before rebirth.";
+			close;
+		}
+		if (SkillPoint) {
+			mes "Please use up your skill points first.";
+			close;
+		}
+		mes "Rebirth makes you a High Novice at Base Lv 1. Go ahead?";
+		next;
+		if (select("Rebirth", "Not now") == 2)
+			close;
+		lastJob = Class;
+		jobchange Job_Novice_High;
+		resetlvl 1;
+		specialeffect2 EF_ANGEL2;
+		mes "[Mega Booster Job Agent]";
+		mes "Welcome back, High Novice!";
+		close;
+	}
+
+	mes "Third and fourth jobs, and expanded classes, go through the usual job quests.";
+	close;
+
+// getarg(0) job, getarg(1) base level, getarg(2) job level to raise to.
+L_Change:
+	if (SkillPoint) {
+		mes "[Mega Booster Job Agent]";
+		mes "Please use up your skill points first.";
+		close;
+	}
+	jobchange getarg(0);
+	if (getarg(1) > 0)
+		callfunc "F_Booster_LevelTo", getarg(1), getarg(2);
+	specialeffect2 EF_ANGEL2;
+	specialeffect2 EF_ELECTRIC;
+	mes "[Mega Booster Job Agent]";
+	mes "Congratulations, you're now " + callfunc("F_InsertArticle", jobname(Class)) + "!";
+	close;
+}
+
+//------------------------------------------------------------
+// Reset Service: GN says one ticket each. The weight and mount
+// rules are HF only. [unverified: weight <= 1500, no cart, falcon,
+// warg, dragon or Mado]
+//------------------------------------------------------------
+prt_in,37,95,0	script	Reset Service#bst	4_F_KAFRA1,{
+	mes "[Reset Service]";
+	if (!callfunc("F_Booster_Holder")) {
+		mes "This service is for Booster Call holders.";
+		close;
+	}
+	mes "One Status Reset Ticket resets your stats; one Skill Reset Ticket resets your skills.";
+	next;
+	.@s = select("Reset stats (" + countitem(1000967) + " tickets)", "Reset skills (" + countitem(1000983) + " tickets)", "Cancel");
+	if (.@s == 3)
+		close;
+	mes "[Reset Service]";
+	if (Weight / 10 > 1500 || checkcart() || checkfalcon() || checkriding() || checkdragon() || checkwug() || checkmadogear() || ismounting()) {
+		mes "Please get your weight down to 1500 and put away your cart, falcon, warg or mount first.";
+		close;
+	}
+	.@ticket = (.@s == 1 ? 1000967 : 1000983);
+	if (countitem(.@ticket) < 1) {
+		mes "You need a " + getitemname(.@ticket) + ".";
+		close;
+	}
+	delitem .@ticket, 1;
+	if (.@s == 1)
+		resetstatus;
+	else
+		resetskill;
+	mes "Done!";
+	close;
+}
+
+//------------------------------------------------------------
+// Booster Exchanger
+// CL voucher text + GN: Booster Weapons for a Booster Weapon Voucher,
+// bound Illusion gear for an Illusion Equipment Voucher, bound
+// Automatic gear for an Automatic Equipment Voucher, and Booster
+// shadow gear. GN: episode gear only after claiming that episode's
+// reward through the Booster Call (flags 18193 / 18194).
+//------------------------------------------------------------
+prt_in,40,95,0	script	Booster Exchanger#bst	495,{
+	mes "[Booster Exchanger]";
+	if (!callfunc("F_Booster_Holder")) {
+		mes "I only trade with Booster Call holders.";
+		close;
+	}
+	mes "What would you like?";
+	next;
+	switch (select("Booster Weapon (Booster Weapon Voucher)", "Illusion gear (Illusion Equipment Voucher)", "Automatic gear (Automatic Equipment Voucher)", "Booster shadow gear (15 Booster Coins)", "Illusion voucher or upgrade package (Booster Coins)", "Cancel")) {
+	case 1:
+		.@shop$ = "booster_ex_weapon";
+		break;
+	case 2:
+		if (BaseLevel < 130 || isbegin_quest(18193) != 2) {
+			mes "[Booster Exchanger]";
+			mes "Illusion gear needs Base Lv 130 and your Episode 17.1 reward from Lime.";
+			close;
+		}
+		.@shop$ = "booster_ex_illusion";
+		break;
+	case 3:
+		if (BaseLevel < 160 || isbegin_quest(18194) != 2) {
+			mes "[Booster Exchanger]";
+			mes "Automatic gear needs Base Lv 160 and your Episode 17.2 reward from Lime.";
+			close;
+		}
+		.@shop$ = "booster_ex_automatic";
+		break;
+	case 4:
+		// [unverified: Lv 100, both HF pages by one author]
+		if (BaseLevel < 100) {
+			mes "[Booster Exchanger]";
+			mes "Booster shadow gear needs Base Lv 100.";
+			close;
+		}
+		.@shop$ = "booster_ex_shadow";
+		break;
+	case 5:
+		.@shop$ = "booster_ex_coins";
+		break;
+	default:
+		close;
+	}
+	// The trades are barter shops in db/barters.yml; prices are there.
+	close2;
+	callshop .@shop$, 1;
+	end;
+}
+
+//------------------------------------------------------------
+// Booster Enchanters (CL voucher text): bound Illusion and Automatic
+// gear. Options and costs are rAthena's item_enchant.yml, which
+// match GN tab 1-5 (Illusion: 15 Mysterious Components + 5 Cor Core;
+// Automatic: 25 Barmil Tickets).
+//------------------------------------------------------------
+sp_cor,98,136,4	script	Booster Enchanter#illusion	851,{
+	mes "[Booster Enchanter]";
+	if (!callfunc("F_Booster_Holder")) {
+		mes "I only enchant for Booster Call holders.";
+		close;
+	}
+	mes "Which bound Illusion piece would you like to enchant?";
+	next;
+	.@s = select("Illusion Armor", "Illusion Engine Wing", "Illusion Leg", "Illusion Booster R / Battle Chip R", "Illusion Booster L / Battle Chip L", "Cancel");
+	if (.@s == 6)
+		close;
+	setarray .@id[1], 34, 39, 40, 42, 43;
+	close2;
+	item_enchant(.@id[.@s]);
+	end;
+}
+
+ba_maison,136,103,4	script	Booster Enchanter#automatic	851,{
+	mes "[Booster Enchanter]";
+	if (!callfunc("F_Booster_Holder")) {
+		mes "I only enchant for Booster Call holders.";
+		close;
+	}
+	mes "Which bound Automatic piece would you like to enchant?";
+	next;
+	.@s = select("Automatic Armor", "Automatic Engine Wing", "Automatic Leg", "Automatic Booster R / Battle Chip R", "Automatic Booster L / Battle Chip L", "Cancel");
+	if (.@s == 6)
+		close;
+	setarray .@id[1], 44, 45, 46, 41, 35;
+	close2;
+	item_enchant(.@id[.@s]);
+	end;
+}

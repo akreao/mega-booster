@@ -1,0 +1,35 @@
+{
+  "name": "mega-booster",
+  "version": "0.1.0",
+  "author": "akreao",
+  "description": "kRO's Mega Booster promotion: a Booster Guide in Izlude (Lasagna for Doram) gives new characters the Booster Box, and the Booster Call summons Lime Evenor for booster shops, hunts, Booster Missions, enchants, Level Up Tickets, milestone rewards and the premium upgrade. Adds the Job Agent, Reset Service and Exchanger in Prontera's Convenience Center and the two Booster Enchanters.",
+  "requires": {
+    "app": ">=1.5.9",
+    "era": "renewal"
+  },
+  "settings": [
+    {
+      "key": "premium_start_box",
+      "type": "boolean",
+      "default": false,
+      "label": "Premium starting box",
+      "description": "The Booster Guide hands out the Premium Booster Box instead of the normal one. On kRO the premium box is a cash-shop item."
+    },
+    {
+      "key": "box_per_character",
+      "type": "boolean",
+      "default": false,
+      "label": "Booster Box for every character",
+      "description": "The Booster Guide gives a Booster Box to every new character instead of one per account."
+    },
+    {
+      "key": "premium_upgrade_coins",
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "max": 10000,
+      "label": "Premium upgrade cost in Booster Coins",
+      "description": "How many Booster Coins Lime charges to upgrade to the Premium Booster Call. 0 uses kRO's cost instead: 150 Nyangvine Fruit, a cash-shop item with no in-game source."
+    }
+  ]
+}

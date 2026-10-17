@@ -1,0 +1,159 @@
+# Mega Booster: quests the mod hands out. Quest IDs are kRO's
+# (OngoingQuestInfoList_True.lub); stock rAthena has none of them.
+# English titles are this mod's, since iRO never ran the event.
+# Hunt targets and counts: gnjoy notice 278 (2026 guide) + hazyforest.
+
+Header:
+  Type: QUEST_DB
+  Version: 3
+
+Body:
+  - Id: 18029
+    Title: Lv1 - Let's Hunt Fabre!
+    Targets:
+      - Mob: FABRE
+        Count: 10
+  - Id: 18031
+    Title: Lv11 - Payon Field Expedition
+    Targets:
+      - Mob: SPORE
+        Count: 10
+      - Mob: SNAKE
+        Count: 10
+      - Mob: WORM_TAIL
+        Count: 10
+  - Id: 18033
+    Title: Lv20 - Culvert Expedition
+    Targets:
+      - Mob: THIEF_BUG_
+        Count: 30
+      - Mob: THIEF_BUG__
+        Count: 30
+      - Mob: POISON_SPORE
+        Count: 20
+  - Id: 18035
+    Title: Lv35 - Mjolnir Dead Pit Expedition
+    Targets:
+      - Mob: MARTIN
+        Count: 30
+      - Mob: SKEL_WORKER
+        Count: 30
+      - Mob: GIEARTH    # 가이아스 [unverified: mob]
+        Count: 10
+  - Id: 18037
+    Title: Lv50 - Byalan Undersea Tunnel Expedition
+    Targets:
+      - Mob: SWORD_FISH
+        Count: 30
+      - Mob: MERMAN
+        Count: 30
+      - Mob: STROUF
+        Count: 30
+  - Id: 18039
+    Title: Lv65 - Payon Cave Expedition
+    Targets:
+      - Mob: MUNAK
+        Count: 30
+      - Mob: BON_GUN
+        Count: 30
+      - Mob: SOHEE
+        Count: 40
+  - Id: 18041
+    Title: Lv80 - Clock Tower Expedition
+    Targets:
+      - Mob: CLOCK
+        Count: 20
+      - Mob: PUNK
+        Count: 20
+      - Mob: RIDEWORD
+        Count: 20
+  # Milestone "claimed" flags (normal 18193-18198, premium 18199-18204).
+  # Booster Missions (CL 18171-18192, 18205). Kill missions count the
+  # boss as spawned in rAthena's instance; the rest are checked by
+  # npc/booster_lime.txt. Missions 2, 14-18 and 20-22 can't be started
+  # (no such dungeon on this server) but keep their quest for the log.
+  - Id: 18171
+    Title: Mission 1 - Half Moon in the Daylight (Easy)
+    Targets:
+      - Mob: POPE_MD_E_LUWMIN
+        Count: 1
+  - Id: 18172
+    Title: Mission 2 - Geffen Magic Tournament
+  - Id: 18173
+    Title: Mission 3 - Sara's Memories
+    Targets:
+      - Mob: IRENE_ELDER
+        Count: 1
+  - Id: 18174
+    Title: Mission 4 - Join the Illusion Investigation Team
+  - Id: 18175
+    Title: Mission 5 - Illusion of Moonlight
+  - Id: 18176
+    Title: Mission 6 - Illusion of Frozen
+  - Id: 18177
+    Title: Mission 7 - Ghost Palace
+    Targets:
+      - Mob: TORTUROUS_REDEEMER
+        Count: 1
+  - Id: 18178
+    Title: Mission 8 - Old Glast Heim
+    Targets:
+      - Mob: MG_AMDARAIS
+        Count: 1
+  - Id: 18179
+    Title: Mission 9 - Illusion of Vampire
+  - Id: 18180
+    Title: Mission 10 - Illusion of Abyss
+  - Id: 18181
+    Title: Mission 11 - Illusion of Teddy Bear
+  - Id: 18182
+    Title: Mission 12 - Illusion of Luanda
+  - Id: 18183
+    Title: Mission 13 - Illusion of Twins
+  - Id: 18184
+    Title: Mission 14 - Old Glast Heim (Hard)
+  - Id: 18185
+    Title: Mission 15 - Illusion of Labyrinth
+  - Id: 18186
+    Title: Mission 16 - Fall of Glast Heim (Normal)
+  - Id: 18187
+    Title: Mission 17 - Bio Lab Expedition (Exploration)
+  - Id: 18188
+    Title: Mission 18 - Old Glast Heim (Challenge)
+  - Id: 18189
+    Title: Mission 19 - Illusion of Underwater
+  - Id: 18190
+    Title: Mission 20 - Geffen Night Arena, Round 3
+  - Id: 18191
+    Title: Mission 21 - Tomb of Remorse
+  - Id: 18192
+    Title: Mission 22 - Constellation Tower
+  - Id: 18205
+    Title: Mission 1 - Half Moon in the Daylight (Hard)
+    Targets:
+      - Mob: POPE_MD_H_KTULLANUX
+        Count: 1
+  - Id: 18193
+    Title: EP 17.1 Booster Reward Claimed
+  - Id: 18194
+    Title: EP 17.2 Booster Reward Claimed
+  - Id: 18195
+    Title: EP 18 Booster Reward Claimed
+  - Id: 18196
+    Title: EP 19 Booster Reward Claimed
+  - Id: 18197
+    Title: Lv 230 Booster Reward Claimed
+  - Id: 18198
+    Title: Lv 250 Booster Reward Claimed
+  - Id: 18199
+    Title: EP 17.1 Premium Reward Claimed
+  - Id: 18200
+    Title: EP 17.2 Premium Reward Claimed
+  - Id: 18201
+    Title: EP 18 Premium Reward Claimed
+  - Id: 18202
+    Title: EP 19 Premium Reward Claimed
+  - Id: 18203
+    Title: Lv 230 Premium Reward Claimed
+  - Id: 18204
+    Title: Lv 250 Premium Reward Claimed

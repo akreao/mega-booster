@@ -1,0 +1,13 @@
+-- Mega Booster: signs over the booster NPCs. The three in Prontera, sp_cor
+-- and ba_maison are kRO's (signboardlist.lub, client build 2025-12-03), with
+-- the English captions of ROenglishRE's Sign_Data.lub. The Booster Guide signs
+-- are this mod's own, since the guides are. The icon is the client's own
+-- Booster Call icon, its Korean file name written as CP949 byte escapes so
+-- this file stays ASCII.
+SignBoardList = {
+	{ "prt_in", 37, 95, 10, 3, "item\\\196\221\191\192\186\234\179\215\184\222\189\195\189\186.bmp", "  Mega Booster Support", "#0x00FFFFFF" },
+	{ "sp_cor", 98, 136, 10, 3, "item\\Auto_M_I_Box_A.bmp", " Booster Illusion Enchantment", "#0x00FFFFFF" },
+	{ "ba_maison", 136, 103, 10, 3, "item\\Auto_M_I_Box_A.bmp", " Booster Automatic Enchantment", "#0x00FFFFFF" },
+	{ "izlude", 127, 237, 10, 3, "item\\\196\221\191\192\186\234\179\215\184\222\189\195\189\186.bmp", "  Booster Guide", "#0x00FFFFFF" },
+	{ "lasa_fild01", 44, 301, 10, 3, "item\\\196\221\191\192\186\234\179\215\184\222\189\195\189\186.bmp", "  Booster Guide", "#0x00FFFFFF" },
+}

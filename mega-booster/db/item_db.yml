@@ -1,0 +1,89 @@
+# Mega Booster: item scripts for event items stock rAthena leaves
+# unscripted or scripts differently from the kRO client. Only Id and
+# the changed fields; everything else stays as stock rAthena has it.
+# Contents are from the kRO client item descriptions (itemInfo_true.lub)
+# unless a comment says otherwise.
+
+Header:
+  Type: ITEM_DB
+  Version: 3
+
+Body:
+  # Booster Call: summons Lime Evenor (npc/booster_lime.txt) next to the
+  # player. kRO keeps the Call after use, so it isn't consumed.
+  - Id: 100337
+    Flags:
+      NoConsume: true
+    Script: |
+      duplicate_dynamic("Lime Evenor#booster");
+  # Premium Booster Call: the same NPC, which shows the premium menus
+  # while the player holds this item.
+  - Id: 101473
+    Flags:
+      NoConsume: true
+    Script: |
+      duplicate_dynamic("Lime Evenor#booster");
+  # Premium Booster Box: stock gives 1 reset ticket of each kind; the
+  # client says 15 (and GN's upgrade maths, 5 + 10, agrees).
+  - Id: 103048
+    Script: |
+      getitem 101473,1;
+      getitem 100029,1;
+      getitem 101458,1;
+      getitem 101459,1;
+      getitem 1000967,15;
+      getitem 1000983,15;
+      getitem 101589,1;
+      getitem 1000995,1;
+  # Booster Costume Headgear Box: pick 1 of 4 (the four hoods that
+  # item_enchant.yml Id 37 enchants).
+  - Id: 101458
+    Script: |
+      callfunc "F_Booster_Pick",101458,440003,1,440006,1,440007,1,440009,1;
+  # Booster Costume Garment Box: pick 1 of 4 school bags (Id 38).
+  - Id: 101459
+    Script: |
+      callfunc "F_Booster_Pick",101459,20595,1,20575,1,20615,1,20616,1;
+  # Booster Armor Box: one of four sets, as the set's crate.
+  - Id: 101423
+    Script: |
+      callfunc "F_Booster_Pick",101423,100046,1,100047,1,100048,1,100049,1;
+  # Souvenir Box: pick a Booster Mask (GN coin shop + client).
+  - Id: 101456
+    Script: |
+      callfunc "F_Booster_Pick",101456,410018,1,410019,1,410020,1;
+  # Premium Souvenir Box: pick a Booster Scarf.
+  - Id: 101457
+    Script: |
+      callfunc "F_Booster_Pick",101457,420153,1,420154,1,420155,1;
+  # Special Currency Pouch (Lv 200): 3 Cor Core + 18 Mysterious
+  # Components, 20 Barmil Tickets, 20 Amethyst Fragments or 20 Snow
+  # Flower Petals. [unverified: that Ep19_Snow_Flower is 설화의 꽃잎]
+  - Id: 101453
+    Script: |
+      mes "[Special Currency Pouch]";
+      mes "Choose one.";
+      .@s = select("3 Cor Core + 18 Mysterious Components", "20 Barmil Tickets", "20 Amethyst Fragments", "20 Snow Flower Petals", "Cancel");
+      if (.@s == 5 || countitem(101453) < 1) close;
+      delitem 101453,1;
+      switch (.@s) {
+      case 1: getitem 25723,3; getitem 25669,18; break;
+      case 2: getitem 1000103,20; break;
+      case 3: getitem 1000405,20; break;
+      case 4: getitem 1000608,20; break;
+      }
+      close;
+  # Metal Weapon Box: one +7 Metal weapon [1]. The client names the
+  # weapons, not their IDs; these are rAthena's 1-slot Metal weapons.
+  # [unverified: item IDs]
+  - Id: 101454
+    Script: |
+      setarray .@w[0], 21005, 1493, 16023, 1398, 13079, 1588, 2018, 1296, 18116, 13125, 26111;
+      for (.@i = 0; .@i < getarraysize(.@w); .@i++) .@menu$ += "+7 " + getitemname(.@w[.@i]) + ":";
+      mes "[Metal Weapon Box]";
+      mes "Choose one.";
+      .@s = select(.@menu$ + "Cancel") - 1;
+      if (.@s >= getarraysize(.@w) || countitem(101454) < 1) close;
+      delitem 101454,1;
+      getitem2 .@w[.@s],1,1,7,0,0,0,0,0;
+      close;
