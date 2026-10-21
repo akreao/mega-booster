@@ -26,6 +26,7 @@ kRO's Mega Booster promotion (메가 부스터 프로모션, 2022 onward) for Ra
 - Illusion missions are checked from the stock member's 4 h standby quest, so report to Lime before talking to that member again after the standby ends. Mission 1 is the Hard version (18205) for Lv 130+, since rAthena's Half Moon picks Hard by the leader's level.
 - rAthena has no Episode 19, so the EP 19 milestone and the currency exchange open by level (210 and 200).
 
+- Booster Pack (1) gives Doram a Metal Foxtail instead of kRO's Metal Dagger, which they can't equip.
 - Known issue: the Attacker Booster Manteau shows no icon or sprite. The art is in the client, but the app's asset server can't find it under the name roBrowser asks for (웤웤망토); the fix is in the asset server, not this mod.
 
 Values with one source are marked `[unverified]` where they're used.

@@ -4,6 +4,10 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.1.1
+- Doram now get a Metal Foxtail from Booster Pack (1), instead of a Metal
+  Dagger they can't equip.
+
 ## 0.1.0
 - First release: kRO's Mega Booster promotion.
 - New characters get a Booster Box from the Booster Guide in Izlude (Doram:
