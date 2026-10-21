@@ -4,6 +4,11 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.1
+- Playing the Druid line? Install the regional-items mod from Find Mods for
+  English names and descriptions of the Druid-only items. They work without
+  it, but their text isn't in English.
+
 ## 0.2.0
 - Needs app 1.6.4 or newer, the first with the Druid job line.
 - Druids can use the Mega Booster too. Booster Pack (1) gives the Druid line

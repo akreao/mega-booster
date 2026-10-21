@@ -4,6 +4,8 @@ kRO's Mega Booster promotion (메가 부스터 프로모션, 2022 onward) for Ra
 
 13 of the 22 Lv 80+ Booster Missions work; the other 9 need memorial dungeons this server doesn't have (see Deviations).
 
+**Playing the Druid line?** Install the regional-items mod from Find Mods too. The English translation doesn't cover the Druid-only items, so without it their names and descriptions aren't in English. The items work either way.
+
 ## Files
 
 | File | What it does |
