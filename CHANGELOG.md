@@ -4,6 +4,18 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.0
+- Needs app 1.6.4 or newer, the first with the Druid job line.
+- Druids can use the Mega Booster too. Booster Pack (1) gives the Druid line
+  a Metal Mace instead of the Metal Dagger they can't equip.
+- The Job Agent changes a Novice into a Druid, a Druid into a Karnos at Base
+  99 / Job 70, and a Karnos into an Alitea at Base 200 / Job 70. kRO has job
+  quests for these; rAthena doesn't yet, so this is the mod's own shortcut.
+- The Booster Exchanger has the Druid Booster Dagger and Booster Axe (one
+  Booster Weapon Voucher each) and the Druid booster shadow weapon (15
+  Booster Coins). Both weapons take the booster enchants, and the shadow
+  weapon has its set bonus with the other five booster shadow pieces.
+
 ## 0.1.1
 - Doram now get a Metal Foxtail from Booster Pack (1), instead of a Metal
   Dagger they can't equip.

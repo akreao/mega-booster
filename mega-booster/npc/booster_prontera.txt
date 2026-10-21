@@ -79,6 +79,8 @@ function	script	F_Booster_Pick	{
 // / Job 70. The job-change requirements (1st job at Job Lv 10, Super
 // Novice also Base 45, 2nd job at Job Lv 50; 3rd and 4th jobs through
 // the normal quests) are HF only. [unverified: requirements]
+// The Druid line (Druid from Novice, then Karnos and Alitea) is this
+// mod's own addition; see the Druid branch below.
 //------------------------------------------------------------
 prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 	mes "[Mega Booster Job Agent]";
@@ -96,7 +98,7 @@ prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 			mes "Come back at Job Lv 10 and I'll get you your first job.";
 			close;
 		}
-		setarray .@jobs[0], Job_Swordman, Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief, Job_Taekwon, Job_Gunslinger, Job_Ninja, Job_Super_Novice;
+		setarray .@jobs[0], Job_Swordman, Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief, Job_Taekwon, Job_Gunslinger, Job_Ninja, JOB_DRUID, Job_Super_Novice;
 		.@menu$ = "";
 		for (.@i = 0; .@i < getarraysize(.@jobs); .@i++)
 			.@menu$ += jobname(.@jobs[.@i]) + ":";
@@ -192,6 +194,31 @@ prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 		mes "[Mega Booster Job Agent]";
 		mes "Welcome back, High Novice!";
 		close;
+	}
+
+	// Druid line: rAthena has no Druid, Karnos or Alitea job quests, so
+	// the agent does those changes. Mod choice, not kRO's: Karnos at Base
+	// 99 / Job 70 as the server's Rebellion and Kagerou/Oboro quests ask,
+	// Alitea at Base 200 / Job 70 as the trait jobs do. [unverified]
+	if (.@base == EAJ_DRUID && !(.@eac & EAJL_THIRD)) {
+		.@to = ((.@eac & EAJL_2_1) ? JOB_ALITEA : JOB_KARNOS);
+		.@bl = ((.@to == JOB_ALITEA) ? 200 : 99);
+		if ((.@eac & EAJL_BABY) && .@to == JOB_ALITEA) {
+			mes "I can't take a Baby Karnos any further.";
+			close;
+		}
+		if (.@eac & EAJL_BABY)
+			.@to = JOB_BABY_KARNOS;
+		if (BaseLevel < .@bl || JobLevel < 70) {
+			mes "At Base Lv " + .@bl + " and Job Lv 70 I can make you " + callfunc("F_InsertArticle", jobname(.@to)) + ".";
+			close;
+		}
+		mes "You'll become " + callfunc("F_InsertArticle", jobname(.@to)) + ". Go ahead?";
+		next;
+		if (select("Go ahead", "Not now") == 2)
+			close;
+		callsub L_Change, .@to, 0, 0;
+		end;
 	}
 
 	mes "Third and fourth jobs, and expanded classes, go through the usual job quests.";

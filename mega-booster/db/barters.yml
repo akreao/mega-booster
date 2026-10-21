@@ -139,7 +139,7 @@ Body:
           - Index: 0
             Item: Booster_M_Ticket
             Amount: 20
-  # Exchanger: Booster Weapons, one Booster Weapon Voucher each (CL voucher text, GN)
+  # Exchanger: Booster Weapons, one Booster Weapon Voucher each (CL voucher text, GN; the client's list has 40, GN's 38)
   - Name: booster_ex_weapon
     Items:
       - Index: 0
@@ -366,6 +366,20 @@ Body:
             Amount: 1
       - Index: 37
         Item: SN_B_Dagger
+        RequiredItems:
+          - Index: 0
+            Item: Booster_W_Ticket
+            Amount: 1
+      # Karnos booster weapons: on the kRO client's voucher, not on GN's
+      # or HF's lists. [unverified: kRO client only]
+      - Index: 38
+        Item: SC_B_Axe
+        RequiredItems:
+          - Index: 0
+            Item: Booster_W_Ticket
+            Amount: 1
+      - Index: 39
+        Item: NP_B_Dagger
         RequiredItems:
           - Index: 0
             Item: Booster_W_Ticket
@@ -633,6 +647,13 @@ Body:
             Amount: 15
       - Index: 22
         Item: S_SP_Weapon
+        RequiredItems:
+          - Index: 0
+            Item: Booster_Coin
+            Amount: 15
+      # Karnos shadow weapon: on GN's 2026 guide (tab 1-2) and the kRO client.
+      - Index: 23
+        Item: S_KR_B_Weapon
         RequiredItems:
           - Index: 0
             Item: Booster_Coin

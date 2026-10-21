@@ -36,15 +36,74 @@ Body:
       getitem 101589,1;
       getitem 1000995,1;
   # Booster Pack (1): kRO's pack gives every class a Metal Dagger, which
-  # Doram can't equip. Doram get the Metal Foxtail, the Doram weapon of
-  # the same Metal series (Metal Weapon Box), instead. This is a mod
-  # change, not kRO's. [unverified: what kRO Doram get here]
+  # Doram and the Druid line can't equip. They get a weapon of the same
+  # Metal series (Metal Weapon Box) instead: Doram the Metal Foxtail, the
+  # Druid line the Metal Mace. This is a mod change, not kRO's.
+  # [unverified: what kRO Doram and Druids get here]
   - Id: 100029
     Script: |
       getgroupitem(IG_BOOSTER_PACK_1,true);
-      if ((Class == JOB_SUMMONER || Class == JOB_SPIRIT_HANDLER) && countitem(13079) > 0) {
-         delitem 13079,1;
-         getitem 26111,1;
+      .@base = eaclass() & EAJ_BASEMASK;
+      if (countitem(13079) > 0) {
+         if (.@base == EAJ_SUMMONER) {
+            delitem 13079,1;
+            getitem 26111,1;
+         } else if (.@base == EAJ_DRUID) {
+            delitem 13079,1;
+            getitem 16023,1;
+         }
+      }
+  # Karnos Booster weapons (the server knows them from its regional item
+  # table since app 1.6.4). Full scripts from the kRO client text, in the
+  # pattern of the stock booster weapons; the regional table leaves out
+  # the Base Lv and Lv 7 lines. [unverified: kRO client text only]
+  # Gust Hail Booster Dagger: Lv 7 gives 1% ranged damage per level of
+  # Raptorial Instinct.
+  - Id: 510200
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,2;
+      bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
+      if (.@r >= 7) {
+         bonus bLongAtkRate,getskilllv("KR_RAPTORIAL_INSTINCT");
+      }
+      if (.@r >= 9) {
+         bonus bAspd,1;
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",25;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",25;
+      }
+      if (.@r >= 11) {
+         bonus2 bAddSize,Size_All,15;
+         bonus bLongAtkRate,15;
+      }
+      if (.@r >= 13) {
+         bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+         bonus2 bSkillAtk,"KR_SHARPEN_HAIL",15;
+      }
+  # Slash Chop-Chop Booster Axe: Lv 7 gives 1% melee damage per level
+  # of Wolf Instinct.
+  - Id: 620064
+    Script: |
+      .@r = getrefine();
+      bonus bUnbreakableWeapon;
+      bonus bAtkRate,2;
+      bonus bBaseAtk,3*.@r+3*(min(BaseLevel,195)/15);
+      if (.@r >= 7) {
+         bonus bShortAtkRate,getskilllv("KR_WOLF_INSTINCT");
+      }
+      if (.@r >= 9) {
+         bonus bDelayrate,-5;
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",25;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",25;
+      }
+      if (.@r >= 11) {
+         bonus bDelayrate,-10;
+         bonus2 bAddSize,Size_All,20;
+      }
+      if (.@r >= 13) {
+         bonus2 bSkillAtk,"KR_DOUBLE_SLASH",15;
+         bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
       }
   # Booster Costume Headgear Box: pick 1 of 4 (the four hoods that
   # item_enchant.yml Id 37 enchants).

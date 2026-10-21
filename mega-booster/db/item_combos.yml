@@ -1,0 +1,31 @@
+# Mega Booster: the set bonus of the Karnos Booster Shadow Weapon with the
+# five Booster shadow pieces, from the kRO client text (stock rAthena has
+# the item but not its set). Written like the stock booster shadow sets.
+# [unverified: kRO client text only]
+
+Header:
+  Type: COMBO_DB
+  Version: 1
+
+Body:
+  - Combos:
+      - Combo:
+          - S_KR_B_Weapon
+          - S_Booster_Armor
+          - S_Booster_Shield
+          - S_Booster_Shoes
+          - S_Booster_Earing
+          - S_Booster_Pandent
+    Script: |
+      bonus2 bAddSize,Size_All,5;
+      bonus2 bSkillAtk,"KR_CHOP_CHOP",15;
+      bonus2 bSkillAtk,"KR_SHARPEN_GUST",15;
+      bonus bShortAtkRate,15;
+      bonus bLongAtkRate,15;
+      bonus bDelayrate,-15;
+      bonus2 bIgnoreDefRaceRate,RC_All,70;
+      bonus2 bIgnoreMdefRaceRate,RC_All,70;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-70;
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-70;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-70;
+      bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-70;

@@ -1,0 +1,14 @@
+# Mega Booster: adds the two Karnos booster weapons to the booster weapon
+# enchants (rAthena's item_enchant.yml Id 36), which Lime opens. The kRO
+# voucher says every Booster Weapon is enchanted through the Booster Call.
+# [unverified: that the Karnos weapons use the same enchant table]
+
+Header:
+  Type: ITEM_ENCHANT_DB
+  Version: 1
+
+Body:
+  - Id: 36
+    TargetItems:
+      SC_B_Axe: true
+      NP_B_Dagger: true
