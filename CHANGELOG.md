@@ -4,6 +4,12 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.2
+- On an iRO client, the Job Agent no longer offers Druid, Karnos or Alitea.
+  iRO's game files have no art or skills for the Druid line, so a Druid
+  there was invisible. On a kRO client nothing changes. This also applies
+  when a kRO data.grf is only set as the fallback GRF.
+
 ## 0.2.1
 - Playing the Druid line? Install the regional-items mod from Find Mods for
   English names and descriptions of the Druid-only items. They work without
