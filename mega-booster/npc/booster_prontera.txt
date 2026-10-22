@@ -80,7 +80,8 @@ function	script	F_Booster_Pick	{
 // Novice also Base 45, 2nd job at Job Lv 50; 3rd and 4th jobs through
 // the normal quests) are HF only. [unverified: requirements]
 // The Druid line (Druid from Novice, then Karnos and Alitea) is this
-// mod's own addition; see the Druid branch below.
+// mod's own addition; see the Druid branch below. It is off on clients
+// without the Druid line's art (F_Booster_NoDruid, booster_client.txt).
 //------------------------------------------------------------
 prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 	mes "[Mega Booster Job Agent]";
@@ -99,6 +100,9 @@ prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 			close;
 		}
 		setarray .@jobs[0], Job_Swordman, Job_Mage, Job_Archer, Job_Acolyte, Job_Merchant, Job_Thief, Job_Taekwon, Job_Gunslinger, Job_Ninja, JOB_DRUID, Job_Super_Novice;
+		// No Druid on a client without the Druid line's art.
+		if (callfunc("F_Booster_NoDruid"))
+			deletearray .@jobs[9], 1;
 		.@menu$ = "";
 		for (.@i = 0; .@i < getarraysize(.@jobs); .@i++)
 			.@menu$ += jobname(.@jobs[.@i]) + ":";
@@ -201,6 +205,10 @@ prt_in,34,95,0	script	Mega Booster Job Agent#bst	10210,{
 	// 99 / Job 70 as the server's Rebellion and Kagerou/Oboro quests ask,
 	// Alitea at Base 200 / Job 70 as the trait jobs do. [unverified]
 	if (.@base == EAJ_DRUID && !(.@eac & EAJL_THIRD)) {
+		if (callfunc("F_Booster_NoDruid")) {
+			mes "This server's game client has no Druid, Karnos or Alitea art, so I can't change Druid jobs here.";
+			close;
+		}
 		.@to = ((.@eac & EAJL_2_1) ? JOB_ALITEA : JOB_KARNOS);
 		.@bl = ((.@to == JOB_ALITEA) ? 200 : 99);
 		if ((.@eac & EAJL_BABY) && .@to == JOB_ALITEA) {
