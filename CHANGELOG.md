@@ -4,6 +4,11 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.3
+- iRO players who set a kRO data.grf as their fallback GRF can become a
+  Druid, Karnos or Alitea again: the fallback has the art. Without a kRO
+  fallback, iRO still gets no Druid-line job changes.
+
 ## 0.2.2
 - On an iRO client, the Job Agent no longer offers Druid, Karnos or Alitea.
   iRO's game files have no art or skills for the Druid line, so a Druid

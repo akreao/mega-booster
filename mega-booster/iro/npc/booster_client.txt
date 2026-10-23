@@ -1,8 +1,0 @@
-//===== Mega Booster: client check (iRO) =====================
-// Replaces npc/booster_client.txt on an iRO client (mod.json
-// clientFolders). iRO's data.grf has no Druid, Karnos or Alitea art,
-// skills or items, so the Job Agent offers no Druid-line job changes.
-//============================================================
-function	script	F_Booster_NoDruid	{
-	return 1;
-}
