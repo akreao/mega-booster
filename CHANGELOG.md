@@ -4,8 +4,11 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.4
+- Needs app 1.7.0 or newer. 0.2.3 should have said so: on an older app its
+  Job Agent stops with a script error. Update the app, or stay on 0.2.2.
+
 ## 0.2.3
-- Needs app 1.7.0 or newer.
 - iRO players who set a kRO data.grf as their fallback GRF can become a
   Druid, Karnos or Alitea again: the fallback has the art. Without a kRO
   fallback, iRO still gets no Druid-line job changes.
