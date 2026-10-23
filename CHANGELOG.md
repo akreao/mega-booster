@@ -17,6 +17,10 @@ app shows players under "What's new". Write it for players.
 - A new Druid gets a Novice Mace. There's no Druid job quest to copy, so
   this one is the mod's own choice.
 
+## 0.2.4
+- Needs app 1.7.0 or newer. 0.2.3 should have said so: on an older app its
+  Job Agent stops with a script error. Update the app, or stay on 0.2.2.
+
 ## 0.2.3
 - iRO players who set a kRO data.grf as their fallback GRF can become a
   Druid, Karnos or Alitea again: the fallback has the art. Without a kRO
