@@ -5,6 +5,7 @@ workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
 ## 0.2.3
+- Needs app 1.7.0 or newer.
 - iRO players who set a kRO data.grf as their fallback GRF can become a
   Druid, Karnos or Alitea again: the fallback has the art. Without a kRO
   fallback, iRO still gets no Druid-line job changes.
