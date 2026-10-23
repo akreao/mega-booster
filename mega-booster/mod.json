@@ -7,9 +7,6 @@
     "app": ">=1.6.4",
     "era": "renewal"
   },
-  "clientFolders": {
-    "iRO": "iro"
-  },
   "settings": [
     {
       "key": "premium_start_box",

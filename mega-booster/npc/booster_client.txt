@@ -1,12 +1,11 @@
 //===== Mega Booster: client check ===========================
-// Whether this host's game client can show the Druid line. kRO's
-// client has the Druid, Karnos and Alitea sprites, skills and items;
-// iRO's has none of them (checked against iRO's data.grf, 2026-10-21),
-// so a Druid there is invisible and has no skill names. mod.json's
-// clientFolders replaces this file with iro/npc/booster_client.txt on
-// an iRO client, where it returns 1 and the Job Agent offers no
-// Druid-line job changes.
+// Whether this host's game files can show the Druid line. iRO's
+// data.grf has no Druid, Karnos or Alitea sprites, skills or items
+// (checked 2026-10-21), so a Druid on an iRO client is invisible
+// unless a kRO data.grf is set as the fallback GRF, which supplies
+// that art. F_ClientInfo is the app's (written with F_ModSetting).
+// Returns 1 when the Job Agent should offer no Druid-line changes.
 //============================================================
 function	script	F_Booster_NoDruid	{
-	return 0;
+	return (callfunc("F_ClientInfo", "client") == "iRO" && callfunc("F_ClientInfo", "fallback") != "kRO");
 }

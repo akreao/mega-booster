@@ -4,7 +4,7 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
-## 0.2.3
+## 0.2.5
 - The Job Agent now gives the same gift the official job quest gives when
   you change job with it. A new Swordman, Mage, Archer, Acolyte, Merchant
   or Thief gets their Novice weapon (Archers also get three arrow quivers),
@@ -16,6 +16,11 @@ app shows players under "What's new". Write it for players.
 - Transcended job changes get no gift, as at Valhalla and Juno.
 - A new Druid gets a Novice Mace. There's no Druid job quest to copy, so
   this one is the mod's own choice.
+
+## 0.2.3
+- iRO players who set a kRO data.grf as their fallback GRF can become a
+  Druid, Karnos or Alitea again: the fallback has the art. Without a kRO
+  fallback, iRO still gets no Druid-line job changes.
 
 ## 0.2.2
 - On an iRO client, the Job Agent no longer offers Druid, Karnos or Alitea.
