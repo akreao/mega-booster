@@ -43,6 +43,73 @@ function	script	F_Booster_LevelTo	{
 	return;
 }
 
+// Job-change gift: what the official job quest gives for the same
+// change, handed out by the Job Agent right after a normal (not
+// transcended) change. Transcended changes give nothing, as at
+// Valhalla and Juno. Opens a new dialog page to show what was given;
+// getarg(0) is the new job.
+// The agent asks for Job Lv 50 before a 2nd job, so the 2nd jobs get
+// the quests' Job Lv 50 gifts.
+function	script	F_Booster_JobGift	{
+	switch (getarg(0)) {
+	// 1st jobs: rAthena's renewal job quests (npc/re/jobs/1-1). The kRO
+	// client has these Novice items; iRO's job quests give none.
+	// [unverified: kRO gifts, rAthena renewal scripts only]
+	case Job_Swordman:	setarray .@item[0], 13415; setarray .@amt[0], 1; break;	// N_Falchion
+	case Job_Mage:		setarray .@item[0], 1639; setarray .@amt[0], 1; break;	// N_Rod
+	case Job_Archer:	setarray .@item[0], 1742, 12004, 12009, 12008; setarray .@amt[0], 1, 1, 1, 1; break;	// N_Composite_Bow, Arrow_Container, Silver_Arrow_Container, Fire_Arrow_Container
+	case Job_Acolyte:	setarray .@item[0], 1545; setarray .@amt[0], 1; break;	// N_Mace
+	case Job_Merchant:	setarray .@item[0], 1381; setarray .@amt[0], 1; break;	// N_Battle_Axe
+	case Job_Thief:		setarray .@item[0], 13041; setarray .@amt[0], 1; break;	// N_Main_Gauche
+	// Expanded 1st jobs and Super Novice: rAthena's job quests and
+	// iRO wiki agree.
+	case Job_Taekwon:	setarray .@item[0], 2101; setarray .@amt[0], 1; break;	// Guard
+	case Job_Ninja:		setarray .@item[0], 13010; setarray .@amt[0], 1; break;	// Asura
+	case Job_Gunslinger:	setarray .@item[0], 13180, 12149, 12151; setarray .@amt[0], 1, 2, 1; break;	// Novice_Rifle, Bullet_Case, Bullet_Case_Silver
+	case Job_Super_Novice:	setarray .@item[0], 2339; setarray .@amt[0], 1; break;	// G_Strings
+	// 2nd jobs at Job Lv 50: rAthena's job quests and iRO wiki agree.
+	// The Sage and Bard quests give nothing on the change (the Bard's
+	// instrument is a trade for 60 trunks).
+	case Job_Knight:	setarray .@item[0], 656; setarray .@amt[0], 7; break;	// Awakening_Potion
+	case Job_Priest:	setarray .@item[0], 1551; setarray .@amt[0], 1; break;	// Bible
+	case Job_Wizard:	setarray .@item[0], 505; setarray .@amt[0], 6; break;	// Blue_Potion
+	case Job_Blacksmith:	setarray .@item[0], 999; setarray .@amt[0], 30; break;	// Steel
+	case Job_Hunter:	setarray .@item[0], 1718; setarray .@amt[0], 1; break;	// Hunter_Bow
+	case Job_Crusader:	setarray .@item[0], 504; setarray .@amt[0], 12; break;	// White_Potion
+	case Job_Monk:		setarray .@item[0], 1804; setarray .@amt[0], 1; break;	// Knuckle_Duster_
+	case Job_Alchemist:	setarray .@item[0], 7133; setarray .@amt[0], 1; break;	// Slim_Potion_Create_Book
+	case Job_Rogue:		setarray .@item[0], 1220; setarray .@amt[0], 1; break;	// Gladius_
+	case Job_Dancer:	setarray .@item[0], 1953; setarray .@amt[0], 1; break;	// Line_
+	case Job_Assassin:
+		// The quest lets a Job Lv 49+ Thief pick one.
+		setarray .@pick[0], 1251, 1253, 1208, 1220;	// Jur_, Katar_, Main_Gauche_, Gladius_
+		next;
+		mes "[Mega Booster Job Agent]";
+		mes "The Assassin job quest lets you pick a weapon as your gift. Which one would you like?";
+		next;
+		.@s = select(getitemname(.@pick[0]), getitemname(.@pick[1]), getitemname(.@pick[2]), getitemname(.@pick[3])) - 1;
+		setarray .@item[0], .@pick[.@s]; setarray .@amt[0], 1;
+		.@picked = 1;
+		break;
+	// Druid: rAthena has no Druid job quest and the kRO client lists no
+	// gift. Mod choice: the Novice weapon the Druid line can equip, as
+	// Booster Pack (1) gives them a mace. [unverified]
+	case JOB_DRUID:		setarray .@item[0], 1545; setarray .@amt[0], 1; break;	// N_Mace
+	default:
+		return;
+	}
+	if (!.@picked) {
+		next;
+		mes "[Mega Booster Job Agent]";
+	}
+	mes "And here is the gift the job quest would have given you:";
+	for (.@i = 0; .@i < getarraysize(.@item); .@i++) {
+		getitem .@item[.@i], .@amt[.@i];
+		mes "- " + (.@amt[.@i] > 1 ? .@amt[.@i] + " x " : "") + getitemname(.@item[.@i]);
+	}
+	return;
+}
+
 // Pick-one box: getarg(0) is the box, then item, amount pairs.
 // Used by the item scripts in db/item_db.yml. The boxes are
 // DelayConsume, so the script deletes the box itself, and only once
@@ -246,6 +313,9 @@ L_Change:
 	specialeffect2 EF_ELECTRIC;
 	mes "[Mega Booster Job Agent]";
 	mes "Congratulations, you're now " + callfunc("F_InsertArticle", jobname(Class)) + "!";
+	// Normal changes get the job quest's gift; transcended ones don't.
+	if (getarg(1) == 0)
+		callfunc "F_Booster_JobGift", Class;
 	close;
 }
 
