@@ -1,0 +1,18 @@
+# Mega Booster: lets the Booster Weapon Upgrade Package (100340) take the
+# four booster weapons rAthena's laphine_upgrade.yml leaves out of it: the
+# two Karnos weapons and the two Super Novice weapons. The kRO client's
+# lapineupgradebox.lub and the package's kRO description both list all four,
+# so the client already offers them; only the server refused them.
+# rAthena adds these to its own list for the package, it doesn't replace it.
+
+Header:
+  Type: LAPHINE_UPGRADE_DB
+  Version: 1
+
+Body:
+  - Item: Booster_W_Up_3
+    TargetItems:
+      - Item: SN_B_Dagger
+      - Item: SN_B_Wand
+      - Item: SC_B_Axe
+      - Item: NP_B_Dagger
