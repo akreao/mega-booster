@@ -1,6 +1,6 @@
 {
   "name": "mega-booster",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "author": "akreao",
   "description": "kRO's Mega Booster promotion: a Booster Guide in Izlude (Lasagna for Doram) gives new characters the Booster Box, and the Booster Call summons Lime Evenor for booster shops, hunts, Booster Missions, enchants, Level Up Tickets, milestone rewards and the premium upgrade. Adds the Job Agent, Reset Service and Exchanger in Prontera's Convenience Center and the two Booster Enchanters.",
   "requires": {
@@ -30,6 +30,13 @@
       "max": 10000,
       "label": "Premium upgrade cost in Booster Coins",
       "description": "How many Booster Coins Lime charges to upgrade to the Premium Booster Call. 0 uses kRO's cost instead: 150 Nyangvine Fruit, a cash-shop item with no in-game source."
+    },
+    {
+      "key": "job_quest_rewards",
+      "type": "boolean",
+      "default": false,
+      "label": "Job quest gifts and skills from the Job Agent",
+      "description": "Job changes through the Job Agent give what the official job quests give: the job-change gift (such as the Novice weapon for a 1st job) and the job line's quest skills (such as Fatal Blow or Charge Attack). Transcended jobs get the quest skills back but no gift."
     }
   ]
 }

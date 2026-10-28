@@ -45,8 +45,9 @@ function	script	F_Booster_LevelTo	{
 
 // Job-change gift: what the official job quest gives for the same
 // change, handed out by the Job Agent right after a normal (not
-// transcended) change. Transcended changes give nothing, as at
-// Valhalla and Juno. Opens a new dialog page to show what was given;
+// transcended) change while the job_quest_rewards setting is on.
+// Transcended changes give nothing, as at Valhalla and Juno. Opens a
+// new dialog page to show what was given;
 // getarg(0) is the new job.
 // The agent asks for Job Lv 50 before a 2nd job, so the 2nd jobs get
 // the quests' Job Lv 50 gifts.
@@ -108,6 +109,85 @@ function	script	F_Booster_JobGift	{
 		mes "- " + (.@amt[.@i] > 1 ? .@amt[.@i] + " x " : "") + getitemname(.@item[.@i]);
 	}
 	return;
+}
+
+// Job quest skills: the skills the official skill quests teach a job
+// line (rAthena npc/quests/skills, renewal's Decorate Cart quest, and
+// the IsQuest skills in rAthena's skill_db; iRO wiki's Quest Skills
+// list has the same set). The Job Agent teaches the whole line up to
+// the new job, so a 2nd job also gets its 1st job's skills, and a
+// transcended job gets them back after rebirth, as Valhalla does.
+// Expanded jobs and the Druid line have no skill quests. getarg(0) is
+// the new job. Returns the names of the skills newly learned, or "".
+function	script	F_Booster_QuestSkills	{
+	.@eac = eaclass(getarg(0));
+	switch (.@eac & EAJ_BASEMASK) {
+	case EAJ_SWORDMAN:
+		setarray .@sk$[0], "SM_MOVINGRECOVERY", "SM_FATALBLOW", "SM_AUTOBERSERK";
+		setarray .@nm$[0], "HP Recovery While Moving", "Fatal Blow", "Berserk";
+		break;
+	case EAJ_MAGE:
+		setarray .@sk$[0], "MG_ENERGYCOAT";
+		setarray .@nm$[0], "Energy Coat";
+		break;
+	case EAJ_ARCHER:
+		setarray .@sk$[0], "AC_MAKINGARROW", "AC_CHARGEARROW";
+		setarray .@nm$[0], "Arrow Crafting", "Arrow Repel";
+		break;
+	case EAJ_ACOLYTE:
+		setarray .@sk$[0], "AL_HOLYLIGHT";
+		setarray .@nm$[0], "Holy Light";
+		break;
+	case EAJ_MERCHANT:
+		setarray .@sk$[0], "MC_CARTREVOLUTION", "MC_CHANGECART", "MC_LOUD", "MC_CARTDECORATE";
+		setarray .@nm$[0], "Cart Revolution", "Change Cart", "Crazy Uproar", "Cart Decoration";
+		break;
+	case EAJ_THIEF:
+		setarray .@sk$[0], "TF_SPRINKLESAND", "TF_BACKSLIDING", "TF_PICKSTONE", "TF_THROWSTONE";
+		setarray .@nm$[0], "Sand Attack", "Back Slide", "Find Stone", "Stone Fling";
+		break;
+	default:
+		return "";
+	}
+	.@n = getarraysize(.@sk$);
+	if (.@eac & EAJL_2) {
+		// The matching normal 2nd job, so transcended jobs share the list.
+		switch (roclass(.@eac & ~(EAJL_UPPER | EAJL_BABY | EAJL_THIRD), Sex)) {
+		case Job_Knight:	setarray .@sk$[.@n], "KN_CHARGEATK"; setarray .@nm$[.@n], "Charge Attack"; break;
+		case Job_Crusader:	setarray .@sk$[.@n], "CR_SHRINK"; setarray .@nm$[.@n], "Shrink"; break;
+		case Job_Wizard:	setarray .@sk$[.@n], "WZ_SIGHTBLASTER"; setarray .@nm$[.@n], "Sight Blaster"; break;
+		case Job_Sage:		setarray .@sk$[.@n], "SA_CREATECON"; setarray .@nm$[.@n], "Create Elemental Converter"; .@sage = 1; break;
+		case Job_Hunter:	setarray .@sk$[.@n], "HT_PHANTASMIC"; setarray .@nm$[.@n], "Phantasmic Arrow"; break;
+		case Job_Bard:		setarray .@sk$[.@n], "BA_PANGVOICE"; setarray .@nm$[.@n], "Pang Voice"; break;
+		case Job_Dancer:	setarray .@sk$[.@n], "DC_WINKCHARM"; setarray .@nm$[.@n], "Charming Wink"; break;
+		case Job_Priest:	setarray .@sk$[.@n], "PR_REDEMPTIO"; setarray .@nm$[.@n], "Redemptio"; break;
+		case Job_Monk:		setarray .@sk$[.@n], "MO_KITRANSLATION", "MO_BALKYOUNG"; setarray .@nm$[.@n], "Spiritual Bestowment", "Excruciating Palm"; break;
+		case Job_Blacksmith:	setarray .@sk$[.@n], "BS_UNFAIRLYTRICK", "BS_GREED"; setarray .@nm$[.@n], "Dubious Salesmanship", "Greed"; break;
+		case Job_Alchemist:	setarray .@sk$[.@n], "AM_BIOETHICS"; setarray .@nm$[.@n], "Bioethics"; break;
+		case Job_Assassin:	setarray .@sk$[.@n], "AS_SONICACCEL", "AS_VENOMKNIFE"; setarray .@nm$[.@n], "Sonic Acceleration", "Venom Knife"; break;
+		case Job_Rogue:		setarray .@sk$[.@n], "RG_CLOSECONFINE"; setarray .@nm$[.@n], "Close Confine"; break;
+		}
+	}
+	.@learned$ = "";
+	for (.@i = 0; .@i < getarraysize(.@sk$); .@i++) {
+		if (getskilllv(.@sk$[.@i]) > 0)
+			continue;
+		skill .@sk$[.@i], 1, SKILL_PERM;
+		.@learned$ += (.@learned$ == "" ? "" : ", ") + .@nm$[.@i];
+	}
+	// The Sage quest teaches one Elemental Change of the player's choice.
+	if (.@sage && getskilllv("SA_ELEMENTWATER") + getskilllv("SA_ELEMENTGROUND") + getskilllv("SA_ELEMENTFIRE") + getskilllv("SA_ELEMENTWIND") == 0) {
+		setarray .@el$[0], "SA_ELEMENTWATER", "SA_ELEMENTGROUND", "SA_ELEMENTFIRE", "SA_ELEMENTWIND";
+		setarray .@eln$[0], "Elemental Change (Water)", "Elemental Change (Earth)", "Elemental Change (Fire)", "Elemental Change (Wind)";
+		next;
+		mes "[Mega Booster Job Agent]";
+		mes "The Sage skill quest teaches one Elemental Change. Which element would you like?";
+		next;
+		.@s = select(.@eln$[0], .@eln$[1], .@eln$[2], .@eln$[3]) - 1;
+		skill .@el$[.@s], 1, SKILL_PERM;
+		.@learned$ += (.@learned$ == "" ? "" : ", ") + .@eln$[.@s];
+	}
+	return .@learned$;
 }
 
 // Pick-one box: getarg(0) is the box, then item, amount pairs.
@@ -313,9 +393,19 @@ L_Change:
 	specialeffect2 EF_ELECTRIC;
 	mes "[Mega Booster Job Agent]";
 	mes "Congratulations, you're now " + callfunc("F_InsertArticle", jobname(Class)) + "!";
-	// Normal changes get the job quest's gift; transcended ones don't.
-	if (getarg(1) == 0)
-		callfunc "F_Booster_JobGift", Class;
+	// Setting job_quest_rewards (off by default): normal changes get the
+	// job quest's gift, transcended ones don't; every change teaches the
+	// line's quest skills.
+	if (callfunc("F_ModSetting", "mega-booster", "job_quest_rewards", 0)) {
+		if (getarg(1) == 0)
+			callfunc "F_Booster_JobGift", Class;
+		.@learned$ = callfunc("F_Booster_QuestSkills", Class);
+		if (.@learned$ != "") {
+			next;
+			mes "[Mega Booster Job Agent]";
+			mes "I've also taught you the skills your job's skill quests teach: " + .@learned$ + ".";
+		}
+	}
 	close;
 }
 
