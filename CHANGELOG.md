@@ -4,6 +4,12 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.9
+- The Booster Guide in Izlude and Lasagna now shows up on iRO game files.
+  Its kRO look isn't in iRO's data.grf, so on an iRO client without a kRO
+  fallback it now wears the Job Agent's look instead. Players with kRO
+  files see no change.
+
 ## 0.2.8
 - The Metal Mace, Metal Dagger, Metal Two-Handed Axe and Novice Mace
   tooltips now list Druid among the jobs that can equip them. Druids could
