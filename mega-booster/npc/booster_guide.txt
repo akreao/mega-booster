@@ -75,6 +75,14 @@ izlude,127,237,4	script	Booster Guide#bst	10243,{
 	mes "[Booster Guide]";
 	mes "Open the box, then use the Booster Call to summon Lime Evenor. She'll guide you from there.";
 	close;
+
+// kRO's guide sprite (4_m_drzonda01) isn't in iRO's data.grf (checked
+// 2026-10-28), so iRO-only hosts get the Job Agent's sprite
+// (4_m_costell), which both clients have.
+OnInit:
+	if (callfunc("F_Booster_IroOnly"))
+		setnpcdisplay(strnpcinfo(0), 10210);
+	end;
 }
 
 // Doram start on lasa_fild01 (char_athena.conf start_point_doram
