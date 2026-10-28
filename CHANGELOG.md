@@ -4,6 +4,13 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.7
+- The Karnos booster items now have English names and descriptions: the
+  Gust Hail Booster Dagger and Slash Chop Chop Booster Axe in the
+  Exchanger's Booster Weapon shop, and the Karnos Booster Shadow Weapon in
+  its Booster Shadow shop. They showed as "undefined" before. Restart the
+  app after updating so the client picks up the new text.
+
 ## 0.2.6
 - New setting "Job quest gifts and skills from the Job Agent", off by
   default. With it off, the Job Agent only changes your job: no
