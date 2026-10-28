@@ -4,6 +4,17 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.6
+- The Job Agent also teaches your job's quest skills when you change job
+  with it, the skills you'd otherwise learn from the skill quests: Fatal
+  Blow and Berserk for a Swordman, Arrow Crafting for an Archer, Charge
+  Attack for a Knight, and so on. A 2nd job also gets its 1st job's quest
+  skills, and a new Sage picks one Elemental Change. After a rebirth, the
+  transcended jobs get their quest skills back, as at Valhalla.
+- New setting "Job quest gifts and skills from the Job Agent", on by
+  default. Turn it off and the Job Agent only changes your job: no
+  job-change gifts and no quest skills.
+
 ## 0.2.5
 - The Job Agent now gives the same gift the official job quest gives when
   you change job with it. A new Swordman, Mage, Archer, Acolyte, Merchant
