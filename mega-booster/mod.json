@@ -34,7 +34,7 @@
     {
       "key": "job_quest_rewards",
       "type": "boolean",
-      "default": true,
+      "default": false,
       "label": "Job quest gifts and skills from the Job Agent",
       "description": "Job changes through the Job Agent give what the official job quests give: the job-change gift (such as the Novice weapon for a 1st job) and the job line's quest skills (such as Fatal Blow or Charge Attack). Transcended jobs get the quest skills back but no gift."
     }

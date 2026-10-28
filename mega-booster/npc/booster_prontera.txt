@@ -393,10 +393,10 @@ L_Change:
 	specialeffect2 EF_ELECTRIC;
 	mes "[Mega Booster Job Agent]";
 	mes "Congratulations, you're now " + callfunc("F_InsertArticle", jobname(Class)) + "!";
-	// Setting job_quest_rewards (on by default): normal changes get the
+	// Setting job_quest_rewards (off by default): normal changes get the
 	// job quest's gift, transcended ones don't; every change teaches the
 	// line's quest skills.
-	if (callfunc("F_ModSetting", "mega-booster", "job_quest_rewards", 1)) {
+	if (callfunc("F_ModSetting", "mega-booster", "job_quest_rewards", 0)) {
 		if (getarg(1) == 0)
 			callfunc "F_Booster_JobGift", Class;
 		.@learned$ = callfunc("F_Booster_QuestSkills", Class);
