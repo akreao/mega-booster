@@ -4,6 +4,12 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.8
+- The Metal Mace, Metal Dagger, Metal Two-Handed Axe and Novice Mace
+  tooltips now list Druid among the jobs that can equip them. Druids could
+  already use all four; the English text just left them out. Restart the
+  app after updating so the client picks up the new text.
+
 ## 0.2.7
 - The Karnos booster items now have English names and descriptions: the
   Gust Hail Booster Dagger and Slash Chop Chop Booster Axe in the

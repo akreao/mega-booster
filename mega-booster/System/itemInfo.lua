@@ -11,6 +11,12 @@
 -- they show as "undefined". Translated from kRO's client itemInfo, in
 -- ROenglishRE's wording for the other booster weapons and shadow weapons.
 -- [unverified: kRO client only]
+--
+-- And four stock weapons Druids get from this mod (Metal Mace, Metal Dagger
+-- and Metal Two-Handed Axe from the booster boxes, Novice Mace as the
+-- Druid's job gift): ROenglishRE's text predates the Druid line, so their
+-- job line leaves it out. kRO's client lists the Druid line for all four.
+-- Same entries with that line fixed.
 tbl = {
 	[100337] = {
 		unidentifiedDisplayName = "Booster Call",
@@ -302,5 +308,112 @@ tbl = {
 		slotCount = 0,
 		ClassNum = 0,
 		costume = true
+	},
+	[16023] = {
+		unidentifiedDisplayName = "Unidentified Mace",
+		unidentifiedResourceName = "클럽",
+		unidentifiedDescriptionName = { "Can be identified by using a ^990099Magnifier^000000." },
+		identifiedDisplayName = "Metal Mace",
+		identifiedResourceName = "메탈메이스",
+		identifiedDescriptionName = {
+			"A metal mace that reinforced by adding emvertracon.",
+			"_______________________",
+			"^0000FFFor each Refine Level^000000:",
+			"ATK +5",
+			"_______________________",
+			"For each ^0000FF10 ^CC6600Base Level^000000 above 20:",
+			"ATK +5",
+			"(up to Base Level 120)",
+			"_______________________",
+			"^0000CCType:^000000 Mace",
+			"^0000CCAttack:^000000 80",
+			"^0000CCWeight:^000000 0",
+			"^0000CCWeapon Level:^000000 3",
+			"_______________________",
+			"^0000CCRequirement:^000000",
+			"Novice, Swordsman, Acolyte, Merchant and Druid"
+		},
+		slotCount = 1,
+		ClassNum = 8,
+		costume = false
+	},
+	[13079] = {
+		unidentifiedDisplayName = "Unidentified Dagger",
+		unidentifiedResourceName = "나이프",
+		unidentifiedDescriptionName = { "Can be identified by using a ^990099Magnifier^000000." },
+		identifiedDisplayName = "Metal Dagger",
+		identifiedResourceName = "메탈대거",
+		identifiedDescriptionName = {
+			"Every Refine ATK +5, MATK +2.",
+			"^CC6600Base Level^000000 at least ^0000FF20^000000:",
+			"Every 10 base Level add +5 ATK.",
+			"(Bonus applies up to BaseLv 120)",
+			"_______________________",
+			"^0000CCType:^000000 Dagger",
+			"^0000CCAttack:^000000 55",
+			"^0000CCWeight:^000000 0",
+			"^0000CCWeapon Level:^000000 3",
+			"_______________________",
+			"^0000CCRequirement:^000000",
+			"Novice, Swordsman, Magician, Archer, Merchant, Thief, Soul Linker, Ninja and Druid"
+		},
+		slotCount = 1,
+		ClassNum = 1,
+		costume = false
+	},
+	[1398] = {
+		unidentifiedDisplayName = "Unidentified Axe",
+		unidentifiedResourceName = "배틀액스",
+		unidentifiedDescriptionName = { "Can be identified by using a ^990099Magnifier^000000." },
+		identifiedDisplayName = "Metal Two-Handed Axe",
+		identifiedResourceName = "메탈투핸드액스",
+		identifiedDescriptionName = {
+			"Two hand axe, which has enhanced the ability to join Emveretarcon and Steel Metal.",
+			"_______________________",
+			"^0000FFFor each Refine Level^000000:",
+			"ATK +7",
+			"_______________________",
+			"^CC6600Base Level^000000 at least ^0000FF^0000FF20^000000:",
+			"For each ^0000FF10 ^CC6600Base Level^000000:",
+			"ATK +5 (Up to Base Level 120)",
+			"_______________________",
+			"^663399Indestructible in battle^000000",
+			"_______________________",
+			"^0000CCType:^000000 Two-Handed Axe",
+			"^0000CCAttack:^000000 105",
+			"^0000CCWeight:^000000 0",
+			"^0000CCWeapon Level:^000000 3",
+			"_______________________",
+			"^0000CCRequirement:^000000",
+			"Swordsman, Merchant and Druid"
+		},
+		slotCount = 1,
+		ClassNum = 7,
+		costume = false
+	},
+	[1545] = {
+		unidentifiedDisplayName = "Unidentified Mace",
+		unidentifiedResourceName = "메이스",
+		unidentifiedDescriptionName = { "Can be identified by using a ^990099Magnifier^000000." },
+		identifiedDisplayName = "Novice Mace",
+		identifiedResourceName = "메이스",
+		identifiedDescriptionName = {
+			"A flanged, solid club that is effective for simple smashing.",
+			"_______________________",
+			"^0000CCType:^000000 Mace",
+			"^0000CCAttack:^000000 57",
+			"^0000CCWeight:^000000 0",
+			"^0000CCWeapon Level:^000000 1",
+			"^0000CCRefineable:^000000 No",
+			"^0000CCCan be enchanted by:^000000",
+			"<NAVI>Almond J<INFO>izlude,108,139,0,100,0,0</INFO></NAVI>",
+			"_______________________",
+			"^0000CCRequirement:^000000",
+			"Base Level 2",
+			"Novice, Swordsman, Acolyte, Merchant and Druid"
+		},
+		slotCount = 3,
+		ClassNum = 62,
+		costume = false
 	},
 }
