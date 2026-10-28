@@ -4,6 +4,14 @@ Each `## <version>` section is that version's release notes: the release
 workflow publishes it as the GitHub Release text, which the Ragnarok Offline
 app shows players under "What's new". Write it for players.
 
+## 0.2.10
+- The Booster Weapon Upgrade Package now works on the Gust Hail Booster
+  Dagger and Slash Chop Chop Booster Axe for Karnos, and on the Super
+  Novice Booster Dagger and Wand. The upgrade window offered them, but the
+  server turned them down.
+- The package's tooltip now lists all 40 booster weapons it can upgrade.
+  Restart the app after updating so the client picks up the new text.
+
 ## 0.2.9
 - The Booster Guide in Izlude and Lasagna now shows up on iRO game files.
   Its kRO look isn't in iRO's data.grf, so on an iRO client without a kRO

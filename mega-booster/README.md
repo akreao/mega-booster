@@ -21,6 +21,7 @@ kRO's Mega Booster promotion (메가 부스터 프로모션, 2022 onward) for Ra
 | `db/item_db.yml` | Scripts for the two Calls (not consumed), the Premium Booster Box (15 reset tickets each, as the client says), the pick-one boxes, Booster Pack (1)'s weapon swap for Doram and Druids, and the Druid Booster Dagger and Axe bonuses the server's table leaves out. |
 | `db/item_enchant.yml` | Adds the Druid Booster Dagger and Axe to the Booster weapon enchants. |
 | `db/item_combos.yml` | The Druid booster shadow weapon's set bonus with the five Booster shadow pieces, from the kRO client. |
+| `db/laphine_upgrade.yml` | Lets the Booster Weapon Upgrade Package refine the Druid Booster Dagger and Axe and the two Super Novice booster weapons, as in the kRO client. |
 | `db/quest_db.yml` | The seven Lv 1–80 hunts (kRO IDs 18029–18041) and the twelve milestone flags (18193–18204). |
 
 ## Deviations from kRO

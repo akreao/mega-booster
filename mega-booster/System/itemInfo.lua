@@ -10,6 +10,9 @@
 -- are regional items with no English client text, so without these entries
 -- they show as "undefined". Translated from kRO's client itemInfo, in
 -- ROenglishRE's wording for the other booster weapons and shadow weapons.
+--
+-- The Booster Weapon Upgrade Package lists the 40 weapons it takes, in kRO's
+-- order (ROenglishRE's text has the 2020 list of 25).
 -- [unverified: kRO client only]
 --
 -- And four stock weapons Druids get from this mod (Metal Mace, Metal Dagger
@@ -61,16 +64,16 @@ tbl = {
 			"Booster Weapons can be refined to +13.",
 			"_______________________",
 			"Ignition Wave Booster Two-Handed Sword",
-			"Hundered Breath Booster Spear",
+			"Hundred Breath Booster Spear",
 			"Banishing Cannon Booster Spear",
-			"Pressure Genesis Booser Sword",
+			"Pressure Genesis Booster Sword",
 			"Power Tornado Booster Axe",
 			"Arms Knuckle Booster Mace",
 			"Acid Cannon Booster Club",
 			"Hells Tornado Booster Sword",
 			"Rolling Cross Booster Katar",
-			"Counter Assault Booster Dagger",
-			"Triangle Spring Booster Bow",
+			"Counter Assault Booster Katar",
+			"Triangle Bomb Booster Bow",
 			"Magic Fatal Booster Dagger",
 			"Crimson Strain Booster Staff",
 			"Chain Jack Booster Staff",
@@ -82,9 +85,24 @@ tbl = {
 			"Sky Cannon Booster Knuckle",
 			"Arrow Booster Bow",
 			"Sharp Bolt Booster Bow",
-			"Rainstorm Booster Bow",
+			"Rainstorm Booster Violin",
+			"Rainstorm Booster Whip",
 			"Metallic Reverberation Booster Violin",
 			"Metallic Reverberation Booster Whip",
+			"Lunatic Picky Booster Foxtail",
+			"Catnip Booster Foxtail Model",
+			"Moon Starlight Booster Book",
+			"Sunshine Booster Book",
+			"Wind Spear Petal Booster Huuma Shuriken",
+			"Cross Petal Booster Huuma Shuriken",
+			"Desperado Fire Booster Revolver",
+			"Fire Round Booster Gatling Gun",
+			"Es Booster Staff",
+			"Evil Curse Booster Staff",
+			"Super Novice Booster Wand",
+			"Super Novice Booster Dagger",
+			"Slash Chop Chop Booster Axe",
+			"Gust Hail Booster Dagger",
 			"_______________________",
 			"^0000CCWeight:^000000 0",
 			"_______________________",
